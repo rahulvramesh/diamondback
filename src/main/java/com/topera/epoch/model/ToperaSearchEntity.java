@@ -28,6 +28,7 @@ public class ToperaSearchEntity implements Serializable
 	
 	
 	
+	
 	public ToperaSearchEntity() {}
 	 
     

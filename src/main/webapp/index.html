@@ -4,54 +4,117 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>DataTables example - Ajax sourced data</title>
 	<link rel="shortcut icon" type="image/png" href="/media/images/favicon.png">
-	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
-	<link rel="stylesheet" type="text/css" href="/media/css/site-examples.css?_=5caac04f688d89b2c49bcb280190366b">
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<style type="text/css" class="init">
-	
+		.searchForm:{
+			width:600px;
+		}
 	</style>
-	
-	
+
+ <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+      <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+      
 	<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-1.11.3.min.js">
 	</script>
 	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js">
 	</script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js">
+	</script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 	<script type="text/javascript" class="init">
-	
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		"ajax": 'arrays.json'
-	} );
-} );
 
+$(function() {
+    $( "#tabs" ).tabs();
+  });
+
+var processSearch = function(){
+
+ 
+
+  $('#example').DataTable( {
+  			"ajax": 'http://localhost:8080/diamondback/search'
+		} );
+
+}
 
 	</script>
+
 </head>
 <body>
-<table id="example" class="display" cellspacing="0" width="100%">
+
+
+
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1">Nunc tincidunt</a></li>
+    <li><a href="#tabs-2">Proin dolor</a></li>
+    <li><a href="#tabs-3">Aenean lacinia</a></li>
+  </ul>
+  <div id="tabs-1">
+    <div class="container">
+     <h2>Search Topera</h2>
+  
+    <div class="form-group">
+      <label for="email">Hospital:</label>
+      <input type="text" class="form-control" id="email" placeholder="Hospital">
+    </div>
+    <div class="form-group">
+      <label for="workstation">Workstation:</label>
+      <input type="text" class="form-control" id="pwd" placeholder="Workstation">
+    </div>
+    <div class="form-group">
+	      <label for="procedure_id">Procedure ID:</label>
+	      <input type="text" class="form-control" id="pwd" placeholder="Procedure ID">
+    </div>
+    <div class="form-group">
+	      <label for="datetime">Date Time:</label>
+	      <input type="workstation" class="form-control" id="pwd" placeholder="Date Time">
+    </div>
+    <div class="form-group">
+		<button type="submit" class="btn btn-default" onclick="processSearch()">Submit</button>
+    </div>
+
+     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
 					<thead>
 						<tr>
-							<th>Name</th>
-							<th>Position</th>
-							<th>Office</th>
-							<th>Extn.</th>
-							<th>Start date</th>
-							<th>Salary</th>
+						    <th>ID</th>
+							<th>Hospital</th>
+							<th>Workstation</th>
+							<th>Procedure ID</th>
+							<th>Date</th>
+							
 						</tr>
 					</thead>
 					<tfoot>
 						<tr>
-							<th>Name</th>
-							<th>Position</th>
-							<th>Office</th>
-							<th>Extn.</th>
-							<th>Start date</th>
-							<th>Salary</th>
+						    <th>ID</th>
+							<th>Hospital</th>
+							<th>Workstation</th>
+							<th>Procedure ID</th>
+							<th>Date</th>
+							
 						</tr>
 					</tfoot>
-				</table>
+		</table>
 
+     </div>
+    
+  </div>
+  <div id="tabs-2">
+    <h2>Upload scripts</h2>
+    
+  </div>
+  
+</div>
+
+
+
+
+ 
 </body>
 </html>
