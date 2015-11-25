@@ -46,7 +46,7 @@
 
 
 
-$( "#searchcontainer" ).load("upload.jsp");
+$( "#searchcontainer" ).load("http://localhost:8080/diamondback/upload");
 $(function() {
     $( "#tabs" ).tabs();
   });

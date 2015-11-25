@@ -3,16 +3,16 @@
 <html lang="en"><script id="tinyhippos-injected">if (window.top.ripple) { window.top.ripple("bootstrap").inject(window, document); }</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>hello</title>
 
-        <link rel="stylesheet" href="./upload_files/bootstrap.min.css">
+        <link rel="stylesheet" href="/resources/bootstrap.min.css">
         
         <link rel="shortcut icon" type="image/png" href="http://ec2contai-ecselast-1odt0hji1ptrd-903851155.us-west-1.elb.amazonaws.com/assets/images/favicon.png">
 
-        <link rel="stylesheet" media="screen" href="css/fine-uploader-gallery.min.css">
+        <link rel="stylesheet" media="screen" href="/resources/css/fine-uploader-gallery.min.css">
             <!-- Loading Bootstrap -->
-        <link href="./upload_files/bootstrap.min(1).css" rel="stylesheet">
+        <link href="/resources/css/bootstrap.min(1).css" rel="stylesheet">
 
             <!-- Loading Flat UI -->
-        <link href="css/flat-ui.css" rel="stylesheet">
+        <link href="/resources/css/flat-ui.css" rel="stylesheet">
 
 
             <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
@@ -23,12 +23,12 @@
     </head>
     <body cz-shortcut-listen="true">
 
-        <script type="text/javascript" src="js/jquery.min.js"></script>
-        <script type="text/javascript" src="js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="js/flat-ui.min.js"></script>
-        <script type="text/javascript" src="js/react.js"></script>
-        <script type="text/javascript" src="js/JSXTransformer.js"></script>
-        <script type="text/javascript" src="js/marked.js"></script>
+        <script type="text/javascript" src="/resources/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/resources/js/flat-ui.min.js"></script>
+        <script type="text/javascript" src="/resources/js/react.js"></script>
+        <script type="text/javascript" src="/resources/js/JSXTransformer.js"></script>
+        <script type="text/javascript" src="/resources/js/marked.js"></script>
 
         <div class="container">
         
@@ -37,9 +37,9 @@
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
 
-            <link href="./upload_files/fine-uploader-gallery.min.css" rel="stylesheet">
+            <link href="/resources/css/fine-uploader-gallery.min.css" rel="stylesheet">
 
-            <script src="./upload_files/s3.fine-uploader.min.js" type="text/javascript"></script>
+            <script src="/resources/js/s3.fine-uploader.min.js" type="text/javascript"></script>
             <script type="text/template" id="qq-template-s3">
             <div class="qq-uploader-selector qq-uploader qq-gallery" qq-drop-area-text="Drop files here">
             <div class="qq-total-progress-bar-container-selector qq-total-progress-bar-container">

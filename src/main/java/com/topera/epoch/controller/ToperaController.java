@@ -15,8 +15,14 @@ public class ToperaController
 
 
 	
+	@RequestMapping("/upload")
+	public ModelAndView upload() {
+//		System.out.println("ToperaController.readBookmark()"+searchData.toString());
+		return new ModelAndView("upload");
+	}
+	
 	@RequestMapping("/index")
-	public ModelAndView readBookmark() {
+	public ModelAndView index() {
 //		System.out.println("ToperaController.readBookmark()"+searchData.toString());
 		return new ModelAndView("index");
 	}
