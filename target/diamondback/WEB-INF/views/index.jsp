@@ -8,10 +8,25 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<style type="text/css" class="init">
-		.searchForm:{
-			width:600px;
-		}
+		#tabs { 
+    padding: 0px; 
+    background: none; 
+    border-width: 0px; 
+} 
+#tabs .ui-tabs-nav { 
+    padding-left: 0px; 
+    background: transparent; 
+    border-width: 0px 0px 1px 0px; 
+    -moz-border-radius: 0px; 
+    -webkit-border-radius: 0px; 
+    border-radius: 0px; 
+} 
+#tabs .ui-tabs-panel { 
+    background: #f5f3e5 url(http://code.jquery.com/ui/1.8.23/themes/south-street/images/ui-bg_highlight-hard_100_f5f3e5_1x100.png) repeat-x scroll 50% top; 
+    border-width: 0px 1px 1px 1px; 
+}
 	</style>
+        
 
  <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
       <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
@@ -25,16 +40,20 @@
 	</script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
+
+
 	<script type="text/javascript" class="init">
 
 
+
+$( "#searchcontainer" ).load("upload.jsp");
 $(function() {
     $( "#tabs" ).tabs();
   });
 
 var processSearch = function(){
 
- 
+
 
   $('#example').DataTable( {
   			"ajax": 'http://localhost:8080/diamondback/search'
@@ -51,13 +70,13 @@ var processSearch = function(){
 
 <div id="tabs">
   <ul>
-    <li><a href="#tabs-1">Nunc tincidunt</a></li>
-    <li><a href="#tabs-2">Proin dolor</a></li>
-    <li><a href="#tabs-3">Aenean lacinia</a></li>
+    <li><a href="#tabs-1">Web Query</a></li>
+    <li><a href="#tabs-2">Upload Script</a></li>
+    <li><a href="#tabs-3">Execute Script</a></li>
   </ul>
   <div id="tabs-1">
     <div class="container">
-     <h2>Search Topera</h2>
+     <h2>Web Query</h2>
   
     <div class="form-group">
       <label for="email">Hospital:</label>
@@ -106,7 +125,10 @@ var processSearch = function(){
     
   </div>
   <div id="tabs-2">
-    <h2>Upload scripts</h2>
+     <div id="searchcontainer" class="container"></div>
+  </div>
+  <div id="tabs-3">
+    <h2>Execute Scripts</h2>
     
   </div>
   
