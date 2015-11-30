@@ -29,11 +29,11 @@
         
 
  <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
-      <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-      <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+      <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+     
       
-	<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-1.11.3.min.js">
-	</script>
+	
+	
 	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js">
 	</script>
 	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js">
@@ -60,43 +60,39 @@ var processSearch = function(){
     
     var data = "{\"hospital\":\""+$("#hospital").val() + "\",\"workstation\":\"" + $("#workstation").val()+"\",\"procedureId\":\""+$("#procid").val()+"\",\"dateTime\":\""+$("#datetime").val()+"\"}";
     
-  alert(data);
+  //alert(data);
    $.ajax({
         type: "POST",
         url: "http://localhost:8080/diamondback/app/search",
         data: data,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        success: function(data){processTable(data);},
+        success: function(fdata){processTable(fdata);}, 
         failure: function(errMsg) {
             alert(errMsg);
         }
   });
 }
 
-function processTable(data){
- $('#example').DataTable( {
-  			data: data,
-             "aoColumns": [{
-				      "mData": 0
-				    }, {
-				      "mData": 1
-				    }, {
-				      "mData": 2
-				    }, {
-				      "mData": 3
-				    }, {
-				      "mData": 4
-				    },  {
-				      "mData": null,
-				      "bSortable": false,
-				      "mRender": function(data, type, full) {
-				        return '<a class="btn btn-info btn-sm" href=#/' + full[0] + '>' + 'Edit' + '</a>';
-				      }
-				    }]
+function processTable(fdata){
+   
+ var table = $('#example').DataTable( {
+  			aaData: fdata.data,
+            "columnDefs": [ {
+            "targets": -1,
+            "data": null,
+            "defaultContent": "<button>Download!</button>"
+        } ]
+            
 		} );
+     $('#example tbody').on( 'click', 'button', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        alert(data[4]);
+        location.href = "https://s3-us-west-2.amazonaws.com/unzipped-topera-bucket/20151116A_ep1_RA_X000.txt"; 
+    } );
 
 }
+        
 	</script>
 
 </head>
@@ -144,7 +140,8 @@ function processTable(data){
 							<th>Workstation</th>
 							<th>Procedure ID</th>
 							<th>Date</th>
-							<th>File Name</th>
+                            <th>File Name</th>
+							<th>Command</th>
 							
 						</tr>
 					</thead>
@@ -156,6 +153,7 @@ function processTable(data){
 							<th>Procedure ID</th>
 							<th>Date</th>
 							<th>File Name</th>
+                            <th>Command</th>
 							
 						</tr>
 					</tfoot>
