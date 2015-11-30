@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.topera.epoch.service.EmployeeManager;
 import com.topera.epoch.service.ToperaService;
+import com.topera.epoch.vo.SearchInput;
 
 //@RunWith(SpringJUnit4ClassRunner.class)
 //@ContextConfiguration(locations = { "./test-context.xml" })
@@ -20,9 +21,13 @@ public class SearchTest {
 	
 	
 	
-	//@Test
+//	@Test
 	public void teqstTopera(){
-		System.out.println("SearchTest.teqstTopera()"+toperaService.searchMetadata(null));
+		
+		SearchInput input = new SearchInput();
+		input.setHospital("TO");
+		
+		System.out.println("SearchTest.teqstTopera()"+toperaService.searchMetadata(toperaService.getToperaSearchEntity(input)));
 	    
 	}
 	

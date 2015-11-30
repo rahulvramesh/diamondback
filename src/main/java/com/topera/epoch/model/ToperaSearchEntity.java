@@ -25,6 +25,7 @@ public class ToperaSearchEntity implements Serializable
 	private String workstation;
 	private String Procedure_ID;
 	private Date datetime;
+	private String fileName;
 	
 	
 	
@@ -76,7 +77,7 @@ public class ToperaSearchEntity implements Serializable
 	}
 	
 	public String[] toArray(){
-		return new String[]{id+"",hospital,workstation,Procedure_ID,datetime+""};
+		return new String[]{hospital,workstation,Procedure_ID,datetime+"",fileName};
 	}
 
 
@@ -112,6 +113,20 @@ public class ToperaSearchEntity implements Serializable
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+
+
+
+	public String getFileName() {
+		return fileName;
+	}
+
+
+
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 	
