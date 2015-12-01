@@ -73,10 +73,13 @@ var processSearch = function(){
         }
   });
 }
-
+var table;
 function processTable(fdata){
+    if(table){
+        table.destroy();
+    }
    
- var table = $('#example').DataTable( {
+ table = $('#example').DataTable( {
   			aaData: fdata.data,
             "columnDefs": [ {
             "targets": -1,

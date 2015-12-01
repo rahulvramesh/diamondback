@@ -21,7 +21,7 @@ public class ToperaSearchDAOImpl implements ToperaSearchDAO
 
 	public Object[] searchMetadata(ToperaSearchEntity searchData) {
 		// TODO Auto-generated method stub
-		String sql = "Select a From ToperaSearchEntity a where 1<>1 "
+		String sql = "Select a From ToperaSearchEntity a where 1=1 "
 				+ getSearchString(searchData);
 		List<String[]> returnData = new ArrayList<String[]>();
 		List<ToperaSearchEntity> toperaSerch = manager.createQuery(sql, ToperaSearchEntity.class).getResultList();
@@ -38,18 +38,18 @@ public class ToperaSearchDAOImpl implements ToperaSearchDAO
 	private String getSearchString(ToperaSearchEntity searchData){
 		StringBuffer searchQuery = new StringBuffer();
 		if(searchData.getHospital()!=null && searchData.getHospital().trim().length() > 0){
-			searchQuery.append(" or hospital like '%"+searchData.getHospital() +"%'");
+			searchQuery.append(" and hospital like '%"+searchData.getHospital() +"%'");
 		}
 		
 		if(searchData.getWorkstation()!=null && searchData.getWorkstation().trim().length() > 0){
-			searchQuery.append(" or workstation like '%"+searchData.getWorkstation() +"%'");
+			searchQuery.append(" and workstation like '%"+searchData.getWorkstation() +"%'");
 		}
 		
 		if(searchData.getProcedure_ID()!=null && searchData.getProcedure_ID().trim().length() > 0){
-			searchQuery.append(" or workstation like '%"+searchData.getProcedure_ID() +"%'");
+			searchQuery.append(" and Procedure_ID like '%"+searchData.getProcedure_ID() +"%'");
 		}
 		if(searchData.getDatetime()!=null){
-			searchQuery.append(" or datetime ='"+searchData.getDatetime() +"'");
+			searchQuery.append(" and datetime ='"+searchData.getDatetime() +"'");
 		}
 		
 		return searchQuery.toString();
