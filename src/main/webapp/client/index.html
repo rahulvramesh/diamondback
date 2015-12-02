@@ -48,6 +48,8 @@
 $( document ).ready(function() {
     document.getElementById("searchcontainer").innerHTML='<object type="text/html" height="100%" width="100%" data="/diamondback/client/uploader.html" ></object>';
 
+  $( "#datetime" ).datepicker();
+    
 });
 
 $(function() {
@@ -63,7 +65,7 @@ var processSearch = function(){
   //alert(data);
    $.ajax({
         type: "POST",
-        url: "http://localhost:8080/diamondback/app/search",
+        url: "/diamondback/app/search",
         data: data,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -90,11 +92,19 @@ function processTable(fdata){
 		} );
      $('#example tbody').on( 'click', 'button', function () {
         var data = table.row( $(this).parents('tr') ).data();
-        alert(data[4]);
-        location.href = "https://s3-us-west-2.amazonaws.com/unzipped-topera-bucket/20151116A_ep1_RA_X000.txt"; 
+        //alert(data[4]);
+        location.href = "/diamondback/app/download/"+data[4]; 
     } );
 
 }
+        
+        function fnclear(){
+            
+          $("#hospital").val("");
+        $("#workstation").val("");    
+           $("#procid").val(""); 
+            $("#datetime").val("");
+        }
         
 	</script>
 
@@ -131,7 +141,10 @@ function processTable(fdata){
     </div>
     <div class="form-group">
 		<button type="submit" class="btn btn-default" onclick="processSearch()">Submit</button>
+        <button type="submit" class="btn btn-default" onclick="fnclear()">Clear</button>
+
     </div>
+     
       
       </div>
 <div style="width:80%">
