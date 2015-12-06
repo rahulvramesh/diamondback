@@ -1,8 +1,6 @@
 package com.topera.epoch.controller;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.util.Iterator;
 
 import org.springframework.stereotype.Controller;
@@ -12,7 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.topera.epoch.service.AsynchFileProcess;
+import com.topera.epoch.service.AWSClient;
+import com.topera.epoch.vo.SearchResultVo;
 
 @Controller
 public class FileUploadController {
@@ -25,29 +24,26 @@ public class FileUploadController {
     }
 
     @RequestMapping(value="/upload", method=RequestMethod.POST)
-    public @ResponseBody String handleFileUpload(MultipartHttpServletRequest request){
+    public SearchResultVo handleFileUpload(MultipartHttpServletRequest request){
     	
     	Iterator<String> itr =  request.getFileNames();
     	 
         MultipartFile file = request.getFile(itr.next());
-    	String filename = "/tmp/topera/"+file.getOriginalFilename();
+        
         if (!file.isEmpty()) {
             try {
-                byte[] bytes = file.getBytes();
-                BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(new File(filename)));
-                stream.write(bytes);
-                stream.close();
-                //AsynchFileProcess.processFile(new File(filename));
-                return "{\"response\":\"You successfully uploaded " + filename + "!\"}";
+            	File convFile = new File( file.getOriginalFilename());
+                file.transferTo(convFile);
+            	AWSClient.putAwsData(convFile);
+                return new SearchResultVo(AWSClient.getScriptFiles());
                 
                 
             } catch (Exception e) {
-                return "{\"response\":\"You failed to upload " + filename + " => " + e.getMessage()+"\"}";
+            	e.printStackTrace();
             }
         } else {
-            return "You failed to upload " + filename + " because the file was empty.";
         }
+        return new SearchResultVo(new String[]{""});
     }
 
 }

@@ -65,5 +65,17 @@ public class ToperaSearchController {
 		
 		
 	}
+	
+	@RequestMapping("/list/script")
+	public SearchResultVo listScript(){
+		
+		
+		return new SearchResultVo(AWSClient.getScriptFiles());
+		
+		
+		
+	}
+	
+	
 
 }
