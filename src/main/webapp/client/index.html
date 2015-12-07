@@ -245,7 +245,7 @@ function porcessScriptTable(data){
             
             $.ajax({
         type: "GET",
-        url: "/diamondback/app/list/script",
+        url: "/diamondback/app/show/schedule",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function(fdata){processScheduleTable(fdata.data);}, 
@@ -406,7 +406,7 @@ $('form').ajaxForm({
 						<tr>
 						   
 							<th>Scripts</th>
-							<th>Command</th>
+							<th>File</th>
                             <th>Status</th>
 							
 						</tr>

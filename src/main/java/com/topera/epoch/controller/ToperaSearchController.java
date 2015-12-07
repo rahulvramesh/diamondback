@@ -87,6 +87,22 @@ public class ToperaSearchController {
 		
 	}
 	
+	@RequestMapping("/show/schedule")
+	public SearchResultVo showSchedule(){
+		Object[] result  = new Object[4];
+		result[0] = new String[]{"app.js","20151111D_ep1_LA_Session_87_Information","Running"};
+		result[1] = new String[]{"app.js","20151111D_ep2_LA_Session_87_Information","Running"};
+		result[2] = new String[]{"app.js","20151111D_ep3_LA_Session_87_Information","Running"};
+		result[3] = new String[]{"app.js","20151111D_ep4_LA_Session_87_Information","Running"};
+		SearchResultVo vo = new SearchResultVo(result);
+		return vo;
+		
+		
+		
+		
+		
+	}
+	
 	
 
 }
