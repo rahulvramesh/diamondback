@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.topera.epoch.service.AWSClient;
-import com.topera.epoch.vo.SearchResultVo;
 
 @Controller
 public class FileUploadController {
@@ -24,7 +23,7 @@ public class FileUploadController {
     }
 
     @RequestMapping(value="/upload", method=RequestMethod.POST)
-    public SearchResultVo handleFileUpload(MultipartHttpServletRequest request){
+    public void handleFileUpload(MultipartHttpServletRequest request){
     	
     	Iterator<String> itr =  request.getFileNames();
     	 
@@ -35,7 +34,7 @@ public class FileUploadController {
             	File convFile = new File( file.getOriginalFilename());
                 file.transferTo(convFile);
             	AWSClient.putAwsData(convFile);
-                return new SearchResultVo(AWSClient.getScriptFiles());
+                //return new SearchResultVo(AWSClient.getScriptFiles());
                 
                 
             } catch (Exception e) {
@@ -43,7 +42,7 @@ public class FileUploadController {
             }
         } else {
         }
-        return new SearchResultVo(new String[]{""});
+        //return new SearchResultVo(new String[]{""});
     }
 
 }

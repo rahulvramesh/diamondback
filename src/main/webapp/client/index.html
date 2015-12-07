@@ -62,11 +62,8 @@
 var dialog;
 
 $( document ).ready(function() {
-    document.getElementById("searchcontainer").innerHTML='<object type="text/html" height="100%" width="100%" data="/diamondback/client/uploader.html" ></object>';
-
-    var addUser = function(){
-        alert("adduser");
-    }
+  
+    
     
     $( "#datetime" ).datepicker();
     
@@ -77,7 +74,7 @@ $( document ).ready(function() {
 
 
 $(function() {
-    $( "#tabs" ).tabs();
+    $( "#myTabs" ).tabs();
 });
         
         
@@ -145,7 +142,7 @@ var processSearch = function(){
     
     var data = "{\"hospital\":\""+$("#hospital").val() + "\",\"workstation\":\"" + $("#workstation").val()+"\",\"procedureId\":\""+$("#procid").val()+"\",\"dateTime\":\""+$("#datetime").val()+"\"}";
     
-  //alert(data);
+  
    $.ajax({
         type: "POST",
         url: "/diamondback/app/search",
@@ -160,6 +157,7 @@ var processSearch = function(){
 }
 var table;
 var table4script;
+var selectedProcedure;        
 
 function processTable(fdata){
     if(table){
@@ -187,23 +185,32 @@ function processTable(fdata){
     
      $('#example tbody').on( 'click', '#script', function () {
         var data = table.row( $(this).parents('tr') ).data();
-         $.ajax({
-        type: "GET",
-        url: "/diamondback/app/list/script",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function(fdata){processScriptTable(fdata);}, 
-        failure: function(errMsg) {
-            alert(errMsg);
-        }
-      });
+         selectedProcedure = data[4];
+        loadTable();
          dialog.dialog( "open" );
         
     } );
 
 }
 
+function loadTable(){
+
+$.ajax({
+        type: "GET",
+        url: "/diamondback/app/list/script",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(fdata){porcessScriptTable(fdata.data);}, 
+        failure: function(errMsg) {
+            alert(errMsg);
+        }
+      });
+
+
+}
+var scheduleTable;
 function porcessScriptTable(data){
+   
 		if(table4script){
             table4script.destroy();
         }
@@ -212,12 +219,57 @@ function porcessScriptTable(data){
             "columnDefs": [ {
             "targets": -1,
             "data": null,
-            "defaultContent": "<button id='download'>Execute!</button>"
+            "defaultContent": "<button id='sExecute'>Execute!</button>"
             } ]
          });
+    
+    $('#scriptTable tbody').on( 'click', '#sExecute', function () {
+		        var data = table4script.row( $(this).parents('tr') ).data();
+		        alert(data+ ",  " +selectedProcedure);
+                 dialog.dialog( "close" );
+        
+                 
+                 $('#ui-id-2').click();
+                 populateSchedule();
+        
+        
+        
+    	    
+    	} );
 
 
 }
+        
+        function populateSchedule(){
+        
+            
+            $.ajax({
+        type: "GET",
+        url: "/diamondback/app/list/script",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(fdata){processScheduleTable(fdata.data);}, 
+        failure: function(errMsg) {
+            alert(errMsg);
+        }
+      });     
+        
+}
+        
+        function processScheduleTable(sdata){
+         if(scheduleTable){
+            scheduleTable.destroy();
+        }
+         scheduleTable = $('#scheduleTable').DataTable( {
+  			aaData: sdata,
+            "columnDefs": [ {
+            "targets": -1,
+            "data": null,
+            "defaultContent": "<button id='sDownload'>Download!</button>"
+            } ]
+         });
+        
+        }
         
         function fnclear(){
             
@@ -229,7 +281,7 @@ function porcessScriptTable(data){
         
         
   function uploadFile(){
-    alert("hello");
+    
       var bar = $('.bar');
 var percent = $('.percent');
 var status = $('#status');
@@ -254,7 +306,7 @@ $('form').ajaxForm({
     },
 	complete: function(xhr) {
 	
-	porcessScriptTable(xhr.responseText.data);
+	loadTable();
 	
 	
 	
@@ -270,7 +322,7 @@ $('form').ajaxForm({
 
 
 
-<div id="tabs" class="container">
+<div id="myTabs" class="container">
   <ul>
     <li><a href="#tabs-1">Web Query</a></li>
     <li><a href="#tabs-2">Upload Script</a></li>
@@ -339,7 +391,30 @@ $('form').ajaxForm({
     
   </div>
   <div id="tabs-2">
-     <div id="searchcontainer" class="container"></div>
+     <div id="searchcontainer" class="container">
+      
+       <table id="scheduleTable" class="table table-striped table-bordered" cellspacing="0">
+					<thead>
+						<tr>
+						   
+							<th>Scripts</th>
+							<th>File</th>
+                            <th>Status</th>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+						   
+							<th>Scripts</th>
+							<th>Command</th>
+                            <th>Status</th>
+							
+						</tr>
+					</tfoot>
+		</table>
+      
+      
+      </div>
   </div>
   <div id="tabs-3">
     <h2>Execute Scripts</h2>

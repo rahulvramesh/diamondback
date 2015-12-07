@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.topera.epoch.model.ToperaSearchEntity;
 import com.topera.epoch.service.AWSClient;
 import com.topera.epoch.service.ToperaService;
+import com.topera.epoch.vo.ScheduleInput;
 import com.topera.epoch.vo.SearchInput;
 import com.topera.epoch.vo.SearchResultVo;
 
@@ -71,6 +72,16 @@ public class ToperaSearchController {
 		
 		
 		return new SearchResultVo(AWSClient.getScriptFiles());
+		
+		
+		
+	}
+	
+	@RequestMapping("/save/schedule")
+	public void scheduleScript(@RequestBody ScheduleInput data){
+		
+		
+		
 		
 		
 		
