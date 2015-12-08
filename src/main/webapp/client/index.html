@@ -225,12 +225,19 @@ function porcessScriptTable(data){
     
     $('#scriptTable tbody').on( 'click', '#sExecute', function () {
 		        var data = table4script.row( $(this).parents('tr') ).data();
-		        alert(data+ ",  " +selectedProcedure);
+		        
+		        saveSchedule(data,selectedProcedure);
                  dialog.dialog( "close" );
         
-                 
+                
                  $('#ui-id-2').click();
-                 populateSchedule();
+                 
+                 setTimeout(
+			            'populateSchedule();',
+			            500
+			        );
+			                 
+                 
         
         
         
@@ -239,6 +246,27 @@ function porcessScriptTable(data){
 
 
 }
+
+function saveSchedule(scriptName,fileName){
+var scheduleData = "{\"scriptName\":\""+scriptName + "\",\"fileName\":\"" + fileName+"\"}";
+    
+ $.ajax({
+        type: "POST",
+        url: "/diamondback/app/save/schedule",
+        data: scheduleData,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(){ }, 
+        failure: function(errMsg) {
+            alert(errMsg);
+        }
+      });
+
+
+}
+
+
+
         
         function populateSchedule(){
         

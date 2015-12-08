@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.topera.epoch.dao.ToperaSearchDAO;
+import com.topera.epoch.model.ScheduleEntity;
 import com.topera.epoch.model.ToperaSearchEntity;
+import com.topera.epoch.vo.ScheduleInput;
 import com.topera.epoch.vo.SearchInput;
 
 @Service
@@ -42,5 +44,18 @@ public class ToperaServiceImpl implements ToperaService {
 
 		return searchEntity;
 
+	}
+
+	public void saveSchedule(ScheduleInput schedule) {
+		// TODO Auto-generated method stub
+		ScheduleEntity scheduleEntity = new ScheduleEntity();
+		scheduleEntity.setFileName(schedule.getFileName());
+		scheduleEntity.setScriptName(schedule.getScriptName());
+		dao.saveSchedule(scheduleEntity);
+	}
+
+	public Object[] listSchedule() {
+		// TODO Auto-generated method stub
+		return dao.listSchedule();
 	}
 }

@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.topera.epoch.model.ScheduleEntity;
 import com.topera.epoch.model.ToperaSearchEntity;
 
 @Repository
@@ -35,6 +36,31 @@ public class ToperaSearchDAOImpl implements ToperaSearchDAO
 		
 		return returnData.toArray();
 	}
+	
+	public Object[] listSchedule() {
+		// TODO Auto-generated method stub
+		String sql = "Select a From ScheduleEntity a ";
+				
+		List<String[]> returnData = new ArrayList<String[]>();
+		List<ScheduleEntity> toperaSerch = manager.createQuery(sql, ScheduleEntity.class).getResultList();
+        
+		
+		System.out.println("ToperaSearchDAOImpl.searchMetadata1()"+sql);
+		for (ScheduleEntity scheduleEntity : toperaSerch) {
+			returnData.add(scheduleEntity.toArray());
+		}
+		
+		
+		return returnData.toArray();
+	}
+	
+	public void saveSchedule(ScheduleEntity schedule){
+		
+		manager.persist(schedule);
+		
+	}
+	
+	
 	private String getSearchString(ToperaSearchEntity searchData){
 		StringBuffer searchQuery = new StringBuffer();
 		if(searchData.getHospital()!=null && searchData.getHospital().trim().length() > 0){

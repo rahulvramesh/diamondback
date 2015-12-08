@@ -2,13 +2,13 @@ package com.topera.epoch.vo;
 
 public class ScheduleInput {
 	
-	private String scriptNAme;
+	private String scriptName;
 	private String fileName;
-	public String getScriptNAme() {
-		return scriptNAme;
+	public String getScriptName() {
+		return scriptName;
 	}
-	public void setScriptNAme(String scriptNAme) {
-		this.scriptNAme = scriptNAme;
+	public void setScriptName(String scriptNAme) {
+		this.scriptName = scriptNAme;
 	}
 	public String getFileName() {
 		return fileName;
