@@ -51,6 +51,8 @@ public class ToperaServiceImpl implements ToperaService {
 		ScheduleEntity scheduleEntity = new ScheduleEntity();
 		scheduleEntity.setFileName(schedule.getFileName());
 		scheduleEntity.setScriptName(schedule.getScriptName());
+		scheduleEntity.setStatus("SCHEDULED");
+		
 		dao.saveSchedule(scheduleEntity);
 	}
 

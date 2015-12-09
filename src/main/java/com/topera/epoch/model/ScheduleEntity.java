@@ -17,7 +17,7 @@ public class ScheduleEntity {
 	
 	private String scriptName;
 	private String fileName;
-	private int status;
+	private String status;
 	public Integer getId() {
 		return id;
 	}
@@ -36,10 +36,10 @@ public class ScheduleEntity {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	
