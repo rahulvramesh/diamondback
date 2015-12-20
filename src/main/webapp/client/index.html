@@ -2,7 +2,7 @@
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>DataTables example - Ajax sourced data</title>
+	<title>Diamondback</title>
 	<link rel="shortcut icon" type="image/png" href="/media/images/favicon.png">
 	<link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css">
@@ -65,7 +65,9 @@ $( document ).ready(function() {
   
     
     
-    $( "#datetime" ).datepicker();
+    $( "#fromdate" ).datepicker();
+    $( "#todate" ).datepicker();
+    document.getElementById("uploader").innerHTML='<object type="text/html" height="100%" width="100%" data="http://ec2contai-ecselast-1odt0hji1ptrd-903851155.us-west-1.elb.amazonaws.com/etl" ></object>';
     
 });
         
@@ -74,10 +76,15 @@ $( document ).ready(function() {
 
 
 $(function() {
+
+
     $( "#myTabs" ).tabs();
+    populateSchedule();
+    populateCron();
+    
 });
         
-        
+   
        
         
         
@@ -140,7 +147,7 @@ var processSearch = function(){
     
     
     
-    var data = "{\"hospital\":\""+$("#hospital").val() + "\",\"workstation\":\"" + $("#workstation").val()+"\",\"procedureId\":\""+$("#procid").val()+"\",\"dateTime\":\""+$("#datetime").val()+"\"}";
+    var data = "{\"hospital\":\""+$("#hospital").val() + "\",\"workstation\":\"" + $("#workstation").val()+"\",\"procedureId\":\""+$("#procid").val()+"\",\"fromDate\":\""+$("#fromdate").val()+"\",\"toDate\":\""+$("#todate").val()+"\"}";
     
   
    $.ajax({
@@ -160,6 +167,10 @@ var table4script;
 var selectedProcedure;        
 
 function processTable(fdata){
+    if(fdata.data.length==0){
+        alert("No data found for your query");
+        
+    }
     if(table){
         table.destroy();
     }
@@ -266,23 +277,53 @@ var scheduleData = "{\"scriptName\":\""+scriptName + "\",\"fileName\":\"" + file
 }
 
 
+ function populateCron(){
+        
+            
+		            $.ajax({
+		        type: "GET",
+		        url: "/diamondback/app/list/cron",
+		        contentType: "application/json; charset=utf-8",
+		        dataType: "json",
+		        success: function(fdata){processCronTable(fdata.data);}, 
+		        failure: function(errMsg) {
+		            alert(errMsg);
+		        }
+		      });  
+		         
+		    //setInterval(populateCron(),50000);    
+		}
+		var cronTable;
+        
+        function processCronTable(sdata){
+         if(cronTable){
+            cronTable.destroy();
+        }
+         cronTable = $('#cronTable').DataTable( {
+  			aaData: sdata
+            
+         });
+        
+        }
+
+
 
         
         function populateSchedule(){
         
             
-            $.ajax({
-        type: "GET",
-        url: "/diamondback/app/show/schedule",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function(fdata){processScheduleTable(fdata.data);}, 
-        failure: function(errMsg) {
-            alert(errMsg);
-        }
-      });     
-        
-}
+		            $.ajax({
+		        type: "GET",
+		        url: "/diamondback/app/show/schedule",
+		        contentType: "application/json; charset=utf-8",
+		        dataType: "json",
+		        success: function(fdata){processScheduleTable(fdata.data);}, 
+		        failure: function(errMsg) {
+		            alert(errMsg);
+		        }
+		      });     
+		        
+		}
         
         function processScheduleTable(sdata){
          if(scheduleTable){
@@ -304,43 +345,13 @@ var scheduleData = "{\"scriptName\":\""+scriptName + "\",\"fileName\":\"" + file
           $("#hospital").val("");
         $("#workstation").val("");    
            $("#procid").val(""); 
-            $("#datetime").val("");
+            $("#fromdate").val("");
+            $("#todate").val("");
+            $("#sfprocid").val("");
         }
         
         
-  function uploadFile(){
-    
-      var bar = $('.bar');
-var percent = $('.percent');
-var status = $('#status');
-   
-$('form').ajaxForm({
-    beforeSend: function() {
-        status.empty();
-        var percentVal = '0%';
-        bar.width(percentVal)
-        percent.html(percentVal);
-    },
-    uploadProgress: function(event, position, total, percentComplete) {
-        var percentVal = percentComplete + '%';
-        bar.width(percentVal)
-        percent.html(percentVal);
-		//console.log(percentVal, position, total);
-    },
-    success: function() {
-        var percentVal = '100%';
-        bar.width(percentVal)
-        percent.html(percentVal);
-    },
-	complete: function(xhr) {
-	
-	loadTable();
-	
-	
-	
-	}
-}); 
-  }      
+  
        
         
 	</script>
@@ -352,10 +363,18 @@ $('form').ajaxForm({
 
 <div id="myTabs" class="container">
   <ul>
+    <li><a href="#tabs-0">Upload zip</a></li>
     <li><a href="#tabs-1">Web Query</a></li>
     <li><a href="#tabs-2">Schedule details</a></li>
+    <li><a href="#tabs-3">Job Report</a></li>
     
   </ul>
+  <div id="tabs-0">
+  		 <div id="uploader" class="container">
+  		 </div>
+  </div>
+  
+  
   <div id="tabs-1">
     <div class="container">
      <h2>Web Query</h2>
@@ -373,8 +392,16 @@ $('form').ajaxForm({
 	      <input type="text" class="form-control" id="procid" style="width:20%" placeholder="Procedure ID">
     </div>
     <div class="form-group">
-	      <label for="datetime">Date Time:</label>
-	      <input type="workstation" class="form-control" id="datetime" style="width:20%" placeholder="Date Time">
+	      <label for="procedure_id">Salesforce Procedure ID:</label>
+	      <input type="text" class="form-control" id="sfprocid" style="width:20%" placeholder="Salesforce Procedure ID">
+    </div>
+    <div class="form-group">
+	      <label for="datetime">From Date:</label>
+	      <input type="workstation" class="form-control" id="fromdate" style="width:20%" placeholder="From Date">
+    </div>
+     <div class="form-group">
+	      <label for="datetime">To Date:</label>
+	      <input type="workstation" class="form-control" id="todate" style="width:20%" placeholder="To Date">
     </div>
     <div class="form-group">
 		<button type="submit" class="btn btn-default" onclick="processSearch()">Submit</button>
@@ -419,7 +446,7 @@ $('form').ajaxForm({
     
   </div>
   <div id="tabs-2">
-     <div id="searchcontainer" class="container">
+     <div id="searchcontainer">
       
        <table id="scheduleTable" class="table table-striped table-bordered" cellspacing="0">
 					<thead>
@@ -444,6 +471,34 @@ $('form').ajaxForm({
       
       </div>
   </div>
+  
+  
+  <div id="tabs-3">
+     <div id="searchcontainer">
+         <button type="submit" class="btn btn-default" onclick="populateCron()">Refresh</button>
+      <div width="80%">
+       <table id="cronTable" class="table table-striped table-bordered"  cellspacing="0">
+					<thead>
+						<tr>
+						   
+							<th>File Name</th>
+                            <th>Status</th>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+						   
+					
+							<th>File Name</th>
+                            <th>Status</th>
+							
+						</tr>
+					</tfoot>
+		</table>
+      
+      </div>
+      </div>
+  </div>
  
   
 </div>
@@ -457,7 +512,7 @@ $('form').ajaxForm({
        
         <form action="/diamondback/app/upload" method="post" enctype="multipart/form-data">
         <input type="file" name="myfile[]" multiple><br>
-        <input type="submit" value="Upload File to Server" onclick = "uploadFile()">
+        <input type="submit" value="Upload File to Server" onclick = "uploadFile(true)">
         </form>
 
         <div class="progress">

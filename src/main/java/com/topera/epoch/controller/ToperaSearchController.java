@@ -34,13 +34,26 @@ public class ToperaSearchController {
 		searchEntity.setHospital(data.getHospital());
 		searchEntity.setWorkstation(data.getWorkstation());
 		searchEntity.setProcedure_ID(data.getProcedureId());
-		if (!data.getDateTime().isEmpty()) {
+		if (!data.getFromDate().isEmpty()) {
 			SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/yyyy");
 			java.util.Date date;
 			try {
-				date = sdf1.parse(data.getDateTime());
+				date = sdf1.parse(data.getFromDate());
 				java.sql.Date sqlStartDate = new Date(date.getTime());
-				searchEntity.setDatetime(sqlStartDate);
+				searchEntity.setFromDate(sqlStartDate);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		if (!data.getToDate().isEmpty()) {
+			SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/yyyy");
+			java.util.Date date;
+			try {
+				date = sdf1.parse(data.getToDate());
+				java.sql.Date sqlStartDate = new Date(date.getTime());
+				searchEntity.setToDate(sqlStartDate);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -77,10 +90,30 @@ public class ToperaSearchController {
 		
 	}
 	
+	@RequestMapping("/list/cron")
+	public SearchResultVo listCron(){
+		
+		
+		return new SearchResultVo(manager.listCronState());
+		
+		
+		
+	}
+	
 	@RequestMapping("/save/schedule")
 	public void scheduleScript(@RequestBody ScheduleInput data){
 		
 		manager.saveSchedule(data);
+		
+		
+		
+		
+	}
+	
+	@RequestMapping("/save/keytofile/key/{key}/name/{name}")
+	public void scheduleScript(@PathVariable String key,@PathVariable String name){
+		
+		manager.saveKeyToFile(key, name);
 		
 		
 		

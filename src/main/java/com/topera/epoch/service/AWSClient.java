@@ -42,7 +42,7 @@ public class AWSClient {
         return objectData;
 	}
 	
-	public static void putAwsData(File file){
+	public static void putAwsData(File file,String bucketName){
 		AWSCredentials creds = new AWSCredentials() {
 
 			public String getAWSSecretKey() {
@@ -60,7 +60,7 @@ public class AWSClient {
 		//Region usWest2 = Region.getRegion(Regions.US_WEST_2);
 		//s3.setRegion(usWest2);
 
-		String bucketName = "analysis-rnd-scripts";
+		
 		
 		s3.putObject(bucketName,file.getName(), file);
         

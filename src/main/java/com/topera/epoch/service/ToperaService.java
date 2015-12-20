@@ -12,6 +12,12 @@ public interface ToperaService
 	
 	public void saveSchedule(ScheduleInput schedule);
 	
+	public void saveZipCron(ScheduleInput schedule);
+	
 	public Object[] listSchedule();
+	
+	public Object[] listCronState();
+	
+	public void saveKeyToFile(String key,String name);
 	
 }

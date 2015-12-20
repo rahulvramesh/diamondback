@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -26,10 +27,42 @@ public class ToperaSearchEntity implements Serializable
 	private String Procedure_ID;
 	private Date datetime;
 	private String fileName;
+	@Transient
+	private Date fromDate;
+	@Transient
+	private Date toDate;
 	
 	
 	
-	
+	@Transient
+	public Date getFromDate() {
+		return fromDate;
+	}
+
+
+
+
+	public void setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
+	}
+
+
+
+	@Transient
+	public Date getToDate() {
+		return toDate;
+	}
+
+
+
+
+	public void setToDate(Date toDate) {
+		this.toDate = toDate;
+	}
+
+
+
+
 	public ToperaSearchEntity() {}
 	 
     

@@ -6,6 +6,8 @@ public class SearchInput {
 	private String workstation;
 	private String procedureId;
 	private String dateTime;
+	private String fromDate;
+	private String toDate;
 	public String getHospital() {
 		return hospital;
 	}
@@ -34,6 +36,30 @@ public class SearchInput {
 	}
 	public void setDateTime(String dateTime) {
 		this.dateTime = dateTime;
+	}
+	/**
+	 * @return the fromDate
+	 */
+	public String getFromDate() {
+		return fromDate;
+	}
+	/**
+	 * @param fromDate the fromDate to set
+	 */
+	public void setFromDate(String fromDate) {
+		this.fromDate = fromDate;
+	}
+	/**
+	 * @return the toDate
+	 */
+	public String getToDate() {
+		return toDate;
+	}
+	/**
+	 * @param toDate the toDate to set
+	 */
+	public void setToDate(String toDate) {
+		this.toDate = toDate;
 	}
 
 }
