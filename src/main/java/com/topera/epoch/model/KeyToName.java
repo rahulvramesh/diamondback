@@ -14,6 +14,7 @@ public class KeyToName
   private Integer id;
   private String keyName;
   private String name;
+  private String status;
   
   public Integer getId()
   {
@@ -44,4 +45,16 @@ public class KeyToName
   {
     this.keyName = keyName;
   }
+
+public String getStatus() {
+	return status;
+}
+
+public void setStatus(String status) {
+	this.status = status;
+}
+
+public String[] toArray(){
+	return new String[]{name,status};
+}
 }

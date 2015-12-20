@@ -51,13 +51,13 @@ public class ToperaSearchDAOImpl
   
   public Object[] listCronState()
   {
-    String sql = "Select a From ZipCronStatus a ";
+    String sql = "Select a From KeyToName a";
     
     List<String[]> returnData = new ArrayList<String[]>();
-    List<ZipCronStatus> toperaSerch = this.manager.createQuery(sql, ZipCronStatus.class).getResultList();
+    List<KeyToName> toperaSerch = this.manager.createQuery(sql, KeyToName.class).getResultList();
     
     System.out.println("ToperaSearchDAOImpl.searchMetadata1()" + sql);
-    for (ZipCronStatus scheduleEntity : toperaSerch) {
+    for (KeyToName scheduleEntity : toperaSerch) {
       returnData.add(scheduleEntity.toArray());
     }
     return returnData.toArray();

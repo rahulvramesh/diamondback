@@ -1,0 +1,24 @@
+title Topera Web Query
+participant ZipUploader
+participant WebQuery
+ZipUploader->S3: upload zip file
+note right of S3: the file uploaded to\ndiamondback-epocs-zip bucket
+EC2->+EC2: scheduled batch
+note right of EC2: The batch runs every minute
+EC2->S3:pull uploaded zip file
+note right of EC2:copy the file to EC2 local folder
+EC2->S3:move uploaded zip to another bucket
+note right of S3: file moved to diamondback-epocs-zip-tmp
+EC2->EC2:process the file from local folder
+EC2->EC2:unzip the zip file
+EC2->RDS-Mysql:save file meta data to database
+EC2->S3:upload unzipped files to\nunzipped_topera_bucket
+deactivate EC2
+WebQuery->+EC2:search metadata
+EC2->RDS-Mysql:search query
+RDS-Mysql-->EC2:query result
+EC2-->-WebQuery:query result
+WebQuery->+EC2:download file
+EC2->S3:download file
+S3-->EC2:text file
+EC2->WebQuery:text file for download
