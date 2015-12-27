@@ -348,6 +348,9 @@ var scheduleData = "{\"scriptName\":\""+scriptName + "\",\"fileName\":\"" + file
             $("#fromdate").val("");
             $("#todate").val("");
             $("#sfprocid").val("");
+             if(table){
+			        table.destroy();
+			 }
         }
         
      function uploadFile(){

@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.util.FileCopyUtils;
+
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
@@ -158,12 +160,10 @@ public static void main(String args[]){
 	//putAwsData(new File("/tmp/script/aws-sdk.js"));
 	try {
 		
-		FileOutputStream fout = new FileOutputStream(new File("/tmp/script"));
-		InputStream is = AWSClient.getAwsData("2002-0186_20151116A_ep10_LA_X009");
-		System.out.println("AWSClient.main()"+is.available());
-		byte[] buff = new byte[is.available()];
-		is.read(buff);
-		fout.write(buff);
+		FileOutputStream fout = new FileOutputStream(new File("0186_20151116A_ep4_RA_X003"));
+		InputStream is = AWSClient.getAwsData("2002-0186_20151116A_ep4_RA_X003");
+		FileCopyUtils.copy(is, fout);
+		
 	} catch (FileNotFoundException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
