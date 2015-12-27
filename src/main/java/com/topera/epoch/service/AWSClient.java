@@ -1,6 +1,9 @@
 package com.topera.epoch.service;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +43,38 @@ public class AWSClient {
         InputStream objectData = object.getObjectContent();
         
         return objectData;
+	}
+	
+	public static InputStream getAwsData(String filename,String bucketName){
+		AWSCredentials creds = new AWSCredentials() {
+
+			public String getAWSSecretKey() {
+				// TODO Auto-generated method stub
+				return "5VVtmI7vcecuVbw8JsG4uo2O1/9RwwLHrTT01Itz";
+			}
+
+			public String getAWSAccessKeyId() {
+				// TODO Auto-generated method stub
+				return "AKIAJCMYALI46A2DIPRQ";
+			}
+		};
+
+		AmazonS3 s3 = new AmazonS3Client(creds);
+		Region usWest2 = Region.getRegion(Regions.US_WEST_2);
+		s3.setRegion(usWest2);
+		System.out.println("AWSClient.getAwsData():fileName "+filename+ " bucket name"+bucketName);
+
+		S3Object object = s3.getObject(new GetObjectRequest(bucketName, filename));
+        InputStream objectData = object.getObjectContent();
+        try {
+			System.out.println("AWSClient.getAwsData()"+objectData.available());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        return objectData;
+
 	}
 	
 	public static void putAwsData(File file,String bucketName){
@@ -101,9 +136,43 @@ public class AWSClient {
 		
 	}
 	
+	public static void saveFileFromS3(String filename,String bucketName, String outputFolder){
+		try {
+			FileOutputStream fout = new FileOutputStream(new File(outputFolder+"/"+filename));
+			InputStream is = AWSClient.getAwsData(filename,bucketName);
+			byte[] buff = new byte[is.available()];
+			is.read(buff);
+			fout.write(buff);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+	}
+	
 	
 public static void main(String args[]){
 	//putAwsData(new File("/tmp/script/aws-sdk.js"));
-	getScriptFiles();
+	try {
+		
+		FileOutputStream fout = new FileOutputStream(new File("/tmp/script"));
+		InputStream is = AWSClient.getAwsData("2002-0186_20151116A_ep10_LA_X009");
+		System.out.println("AWSClient.main()"+is.available());
+		byte[] buff = new byte[is.available()];
+		is.read(buff);
+		fout.write(buff);
+	} catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+//	getScriptFiles();
 }
 }
+
