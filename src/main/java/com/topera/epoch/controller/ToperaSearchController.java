@@ -70,7 +70,8 @@ public class ToperaSearchController {
 		try {
 			response.setHeader("Content-Disposition", String.format("attachment; filename=\"" + fileName +".txt\""));
 			response.setHeader("Content-Transfer-Encoding", "binary");
-			FileCopyUtils.copy(AWSClient.getAwsData(fileName), response.getOutputStream());
+			System.out.println("ToperaSearchController.download()filename="+fileName+"!");
+			FileCopyUtils.copy(AWSClient.getAwsData(fileName.trim()), response.getOutputStream());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

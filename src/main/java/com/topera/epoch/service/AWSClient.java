@@ -99,7 +99,7 @@ public class AWSClient {
 
 		
 		
-		s3.putObject(bucketName,file.getName(), file);
+		s3.putObject(bucketName,file.getName().split("\\.")[0], file);
         
         
 	}
@@ -157,20 +157,20 @@ public class AWSClient {
 	
 	
 public static void main(String args[]){
-	//putAwsData(new File("/tmp/script/aws-sdk.js"));
-	try {
-		
-		FileOutputStream fout = new FileOutputStream(new File("0186_20151116A_ep4_RA_X003"));
-		InputStream is = AWSClient.getAwsData("2002-0186_20151116A_ep4_RA_X003");
-		FileCopyUtils.copy(is, fout);
-		
-	} catch (FileNotFoundException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+	putAwsData(new File("/Users/arupbanerjee/downloads/2002-0186_20151111A_ep2_LA_Session_88_Information.txt-OUTPUT.txt"),"unzipped-topera-bucket");
+//	try {
+//		
+//		FileOutputStream fout = new FileOutputStream(new File("/tmp/2002-0186_20151111A_ep2_LA_Session_87_Information-algorithm.txt"));
+//		InputStream is = AWSClient.getAwsData("2002-0186_20151111A_ep2_LA_Session_87_Information-algorithm.txt");
+//		FileCopyUtils.copy(is, fout);
+//		
+//	} catch (FileNotFoundException e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	} catch (IOException e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	}
 	
 //	getScriptFiles();
 }

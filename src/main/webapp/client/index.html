@@ -241,7 +241,7 @@ function porcessScriptTable(data){
                  dialog.dialog( "close" );
         
                 
-                 $('#ui-id-2').click();
+                 $('#ui-id-3').click();
                  
                  setTimeout(
 			            'populateSchedule();',
@@ -331,16 +331,31 @@ var scheduleData = "{\"scriptName\":\""+scriptName + "\",\"fileName\":\"" + file
         }
          scheduleTable = $('#scheduleTable').DataTable( {
   			aaData: sdata,
-            "columnDefs": [ {
-            "targets": -1,
-            "data": null,
-            "defaultContent": "<button id='sDownload'>Download!</button>"
-            } ]
+              "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+                  
+                    /* Append the grade to the default row class name */
+                   if ( aData[2] == "SCHEDULED" )
+                    {
+                        $('td:eq(2)', nRow).html( '<b>SCHEDULED</b>' );
+                    } else {
+                        $('td:eq(2)', nRow).html( "<button id='sDownload'>Download!</button>" );
+                    }
+                }
+           
          });
+            
+             $('#scheduleTable tbody').on( 'click', '#sDownload', function () {
+        var data = scheduleTable.row( $(this).parents('tr') ).data();
+        //alert(data[4]);
+        location.href = "/diamondback/app/download/"+data[1]+"-"+data[0]+"-OUTPUT"; 
+         } );
         
         }
         
+        
+        
         function fnclear(){
+            alert("clear");
             
           $("#hospital").val("");
         $("#workstation").val("");    
@@ -348,9 +363,6 @@ var scheduleData = "{\"scriptName\":\""+scriptName + "\",\"fileName\":\"" + file
             $("#fromdate").val("");
             $("#todate").val("");
             $("#sfprocid").val("");
-             if(table){
-			        table.destroy();
-			 }
         }
         
      function uploadFile(){
