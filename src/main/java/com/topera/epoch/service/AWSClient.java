@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.util.FileCopyUtils;
@@ -157,7 +158,9 @@ public class AWSClient {
 	
 	
 public static void main(String args[]){
-	System.out.println("AWSClient.main()"+"abckd".split(",")[0]);
+	System.out.println("AWSClient.main()"+new Date());
+	
+    
 	//putAwsData(new File("/Users/arupbanerjee/downloads/2002-0186_20151111A_ep2_LA_Session_88_Information.txt-OUTPUT.txt"),"unzipped-topera-bucket");
 //	try {
 //		
