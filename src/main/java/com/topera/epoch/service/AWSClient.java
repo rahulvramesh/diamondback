@@ -157,7 +157,8 @@ public class AWSClient {
 	
 	
 public static void main(String args[]){
-	putAwsData(new File("/Users/arupbanerjee/downloads/2002-0186_20151111A_ep2_LA_Session_88_Information.txt-OUTPUT.txt"),"unzipped-topera-bucket");
+	System.out.println("AWSClient.main()"+"abckd".split(",")[0]);
+	//putAwsData(new File("/Users/arupbanerjee/downloads/2002-0186_20151111A_ep2_LA_Session_88_Information.txt-OUTPUT.txt"),"unzipped-topera-bucket");
 //	try {
 //		
 //		FileOutputStream fout = new FileOutputStream(new File("/tmp/2002-0186_20151111A_ep2_LA_Session_87_Information-algorithm.txt"));

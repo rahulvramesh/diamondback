@@ -50,20 +50,32 @@ public class ToperaServiceImpl implements ToperaService {
 
 	public void saveSchedule(ScheduleInput schedule) {
 		// TODO Auto-generated method stub
-		ScheduleEntity scheduleEntity = new ScheduleEntity();
-		scheduleEntity.setFileName(schedule.getFileName());
-		scheduleEntity.setScriptName(schedule.getScriptName());
-		scheduleEntity.setStatus("SCHEDULED");
-		
-		dao.saveSchedule(scheduleEntity);
+		String fileName = schedule.getFileName();
+		System.out.println("ToperaServiceImpl.saveSchedule():filename=" + fileName);
+
+		String[] files = fileName.split(",");
+		ScheduleEntity scheduleEntity = null;
+		for (String file : files) {
+			scheduleEntity = new ScheduleEntity();
+			scheduleEntity.setFileName(file);
+			scheduleEntity.setScriptName(schedule.getScriptName());
+			scheduleEntity.setStatus("SCHEDULED");
+            try{
+			dao.saveSchedule(scheduleEntity);
+            } catch(Exception ee){
+				ee.printStackTrace();
+			}
+			
+		}
+
 	}
-	
-	public void saveKeyToFile(String key,String name) {
+
+	public void saveKeyToFile(String key, String name) {
 		// TODO Auto-generated method stub
 		KeyToName keytoname = new KeyToName();
 		keytoname.setKeyName(key);
 		keytoname.setName(name);
-		
+
 		dao.saveKeyToFile(keytoname);
 	}
 
@@ -71,7 +83,7 @@ public class ToperaServiceImpl implements ToperaService {
 		// TODO Auto-generated method stub
 		return dao.listSchedule();
 	}
-	
+
 	public Object[] listCronState() {
 		// TODO Auto-generated method stub
 		return dao.listCronState();
@@ -83,6 +95,6 @@ public class ToperaServiceImpl implements ToperaService {
 		zipCronStatus.setName(schedule.getFileName());
 		zipCronStatus.setStatus("NOT STARTED");
 		dao.saveZipCorn(zipCronStatus);
-		
+
 	}
 }
