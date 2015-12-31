@@ -71,7 +71,7 @@ body.loading {
 body.loading .modal {
     display: block;
 }
-
+        
         
 	</style>
         
@@ -292,7 +292,13 @@ function porcessScriptTable(data){
             "targets": -1,
             "data": null,
             "defaultContent": "<button id='sExecute'>Execute!</button>"
-            } ]
+            },{
+            "targets": -2,
+            "data": null,
+            "defaultContent": "<button id='scriptDownload'>Download!</button>"
+            }
+            
+           ]
          });
     
     $('#scriptTable tbody').on( 'click', '#sExecute', function () {
@@ -308,13 +314,13 @@ function porcessScriptTable(data){
 			            'populateSchedule();',
 			            500
 			        );
-			                 
-                 
-        
-        
-        
-    	    
-    	} );
+		} );
+    
+     $('#scriptTable tbody').on( 'click', '#scriptDownload', function () {
+        var data = table4script.row( $(this).parents('tr') ).data();
+        //alert(data[4]);
+        location.href = "/diamondback/app/download/python/"+data[0]+"/bucket/analysis-rnd-scripts"; 
+         } );
 
 
 }
@@ -410,7 +416,7 @@ var scheduleData = "{\"scriptName\":\""+scriptName + "\",\"fileName\":\"" + file
              $('#scheduleTable tbody').on( 'click', '#sDownload', function () {
         var data = scheduleTable.row( $(this).parents('tr') ).data();
         //alert(data[4]);
-        location.href = "/diamondback/app/download/"+data[1]+"-"+data[0]; 
+        location.href = "/diamondback/app/download/"+data[1]+"-"+data[0]+"/bucket/analysis-output-bucket"; 
          } );
         
         }
@@ -491,41 +497,48 @@ $('form').ajaxForm({
   
   <div id="tabs-1">
     <div class="container">
-     <h2>Web Query</h2>
-  <div style="white-space: nowrap;">
-    <div class="form-group">
+  <div style="white-space: nowrap;overflow: hidden">
+    <div style="width:20%;display: inline-block;">
       <label for="email">Hospital:</label>
-      <input type="text" class="form-control" id="hospital" style="width:20%" placeholder="Hospital">
+      <input type="text" class="form-control" id="hospital" placeholder="Hospital">
     </div>
-    <div class="form-group">
+    <div style="width:20%;display: inline-block;">
       <label for="workstation">Workstation:</label>
-      <input type="text" class="form-control" id="workstation" style="width:20%" placeholder="Workstation">
+      <input type="text" class="form-control" id="workstation"  placeholder="Workstation">
     </div>
-    <div class="form-group">
+      
+        <div style="width:20%;display: inline-block;">
+
 	      <label for="procedure_id">Procedure ID:</label>
-	      <input type="text" class="form-control" id="procid" style="width:20%" placeholder="Procedure ID">
+	      <input type="text" class="form-control" id="procid" placeholder="Procedure ID">
     </div>
-    <div class="form-group">
+        
+        </div>
+        
+        <div class="form-group">
+        <div style="width:20%;display: inline-block;">
+
 	      <label for="procedure_id">Salesforce Procedure ID:</label>
-	      <input type="text" class="form-control" id="sfprocid" style="width:20%" placeholder="Salesforce Procedure ID">
+	      <input type="text" class="form-control" id="sfprocid" placeholder="Salesforce Procedure ID">
     </div>
-    <div class="form-group">
+            <div style="width:20%;display: inline-block;">
+
 	      <label for="datetime">From Date:</label>
-	      <input type="workstation" class="form-control" id="fromdate" style="width:20%" placeholder="From Date">
+	      <input type="workstation" class="form-control" id="fromdate" placeholder="From Date">
     </div>
-     <div class="form-group">
+     <div style="width:20%;display: inline-block;">
 	      <label for="datetime">To Date:</label>
-	      <input type="workstation" class="form-control" id="todate" style="width:20%" placeholder="To Date">
+	      <input type="workstation" class="form-control" id="todate"  placeholder="To Date">
     </div>
+        </div>
     <div class="form-group">
 		<button type="submit" class="btn btn-default" onclick="processSearch()">Submit</button>
         <button type="submit" class="btn btn-default" onclick="fnclear()">Clear</button>
         <button type="submit" class="btn btn-default" onclick="executeScript()">Execute Algorithm</button>
 
-    </div>
-     
+        </div>    
       
-      </div>
+      
 <div style="width:80%">
      <table id="example" class="table table-striped table-bordered" cellspacing="0">
 					<thead>
@@ -558,6 +571,7 @@ $('form').ajaxForm({
     </div>
 
      </div>
+    
     
   </div>
   <div id="tabs-2">
@@ -644,6 +658,7 @@ $('form').ajaxForm({
 						   
 							<th>Scripts</th>
 							<th>Command</th>
+                            <th>Command</th>
 						</tr>
 					</thead>
 					<tfoot>
@@ -651,6 +666,7 @@ $('form').ajaxForm({
 						   
 							<th>Scripts</th>
 							<th>Command</th>
+                            <th>Command</th>
 							
 						</tr>
 					</tfoot>

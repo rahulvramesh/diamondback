@@ -1,5 +1,7 @@
 package com.topera.epoch.vo;
 
+import org.springframework.util.StringUtils;
+
 public class SearchInput {
 	
 	private String hospital;
@@ -31,8 +33,16 @@ public class SearchInput {
 	public void setProcedureId(String procedureId) {
 		this.procedureId = procedureId;
 	}
+	String processDate(String date){
+		System.out.println("SearchInput.processDate()date=="+date);
+		if(StringUtils.isEmpty(date)){
+			return "";
+		}
+		return (date.split("/")[0].equals("12")?"00":date.split("/")[0])+"-"+date.split("/")[1]+"-"+date.split("/")[2];	
+	}
 	public String getDateTime() {
-		return dateTime;
+			
+		return processDate(dateTime);
 	}
 	public void setDateTime(String dateTime) {
 		this.dateTime = dateTime;
@@ -41,7 +51,7 @@ public class SearchInput {
 	 * @return the fromDate
 	 */
 	public String getFromDate() {
-		return fromDate;
+		return processDate(fromDate);
 	}
 	/**
 	 * @param fromDate the fromDate to set
@@ -53,7 +63,7 @@ public class SearchInput {
 	 * @return the toDate
 	 */
 	public String getToDate() {
-		return toDate;
+		return processDate(toDate);
 	}
 	/**
 	 * @param toDate the toDate to set

@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -63,7 +65,7 @@ public class AWSClient {
 		};
 
 		AmazonS3 s3 = new AmazonS3Client(creds);
-		Region usWest2 = Region.getRegion(Regions.US_WEST_2);
+		Region usWest2 = Region.getRegion(Regions.US_WEST_1);
 		s3.setRegion(usWest2);
 		System.out.println("AWSClient.getAwsData():fileName "+filename+ " bucket name"+bucketName);
 
@@ -95,8 +97,8 @@ public class AWSClient {
 		};
 
 		AmazonS3 s3 = new AmazonS3Client(creds);
-		//Region usWest2 = Region.getRegion(Regions.US_WEST_2);
-		//s3.setRegion(usWest2);
+		Region usWest2 = Region.getRegion(Regions.US_WEST_1);
+		s3.setRegion(usWest2);
 
 		
 		
@@ -159,7 +161,13 @@ public class AWSClient {
 	
 public static void main(String args[]){
 	System.out.println("AWSClient.main()"+new Date());
-	
+	SimpleDateFormat sdf1 = new SimpleDateFormat("MM-dd-yyyy");
+	try {
+		System.out.println("AWSClient.main()"+sdf1.parse("12-19-2001"));
+	} catch (ParseException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
     
 	//putAwsData(new File("/Users/arupbanerjee/downloads/2002-0186_20151111A_ep2_LA_Session_88_Information.txt-OUTPUT.txt"),"unzipped-topera-bucket");
 //	try {

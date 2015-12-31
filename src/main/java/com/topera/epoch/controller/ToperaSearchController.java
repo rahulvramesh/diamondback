@@ -35,29 +35,13 @@ public class ToperaSearchController {
 		searchEntity.setWorkstation(data.getWorkstation());
 		searchEntity.setProcedure_ID(data.getProcedureId());
 		if (!data.getFromDate().isEmpty()) {
-			SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/yyyy");
-			java.util.Date date;
-			try {
-				date = sdf1.parse(data.getFromDate());
-				java.sql.Date sqlStartDate = new Date(date.getTime());
-				searchEntity.setFromDate(sqlStartDate);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				searchEntity.setFromDate(data.getFromDate());
+			
 		}
 		
 		if (!data.getToDate().isEmpty()) {
-			SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/yyyy");
-			java.util.Date date;
-			try {
-				date = sdf1.parse(data.getToDate());
-				java.sql.Date sqlStartDate = new Date(date.getTime());
-				searchEntity.setToDate(sqlStartDate);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				searchEntity.setToDate(data.getToDate());
+			
 		}
 
 		return new SearchResultVo(this.manager.searchMetadata(searchEntity));
@@ -78,6 +62,39 @@ public class ToperaSearchController {
 		}
 		
 		
+		
+	}
+	
+	
+	@RequestMapping("/download/{fileName}/bucket/{bucketName}")
+	public void download(@PathVariable String fileName,@PathVariable String bucketName,HttpServletResponse response){
+		
+		
+		try {
+			response.setHeader("Content-Disposition", String.format("attachment; filename=\"" + fileName +".txt\""));
+			response.setHeader("Content-Transfer-Encoding", "binary");
+			System.out.println("ToperaSearchController.download()filename="+fileName+"!");
+			FileCopyUtils.copy(AWSClient.getAwsData(fileName.trim(),bucketName), response.getOutputStream());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@RequestMapping("/download/python/{fileName}/bucket/{bucketName}")
+	public void downloadPython(@PathVariable String fileName,@PathVariable String bucketName,HttpServletResponse response){
+		
+		
+		try {
+			response.setHeader("Content-Disposition", String.format("attachment; filename=\"" + fileName +".py\""));
+			response.setHeader("Content-Transfer-Encoding", "binary");
+			System.out.println("ToperaSearchController.download()filename="+fileName+"!");
+			FileCopyUtils.copy(AWSClient.getAwsData(fileName.trim(),bucketName), response.getOutputStream());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
