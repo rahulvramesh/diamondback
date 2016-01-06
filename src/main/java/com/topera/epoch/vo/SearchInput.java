@@ -38,7 +38,7 @@ public class SearchInput {
 		if(StringUtils.isEmpty(date)){
 			return "";
 		}
-		return (date.split("/")[0].equals("12")?"00":date.split("/")[0])+"-"+date.split("/")[1]+"-"+date.split("/")[2];	
+		return date.split("/")[2]+"-"+(date.split("/")[0].equals("12")?"00":date.split("/")[0])+"-"+date.split("/")[1];	
 	}
 	public String getDateTime() {
 			

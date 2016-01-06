@@ -94,10 +94,10 @@ public class ToperaSearchDAOImpl
       searchQuery.append(" and datetime between '" + searchData.getFromDate() + "' and '" + searchData.getToDate() + "'");
     }
     if ((searchData.getFromDate() != null) && (searchData.getToDate() == null)) {
-      searchQuery.append(" and date_format(datetime, '%m-%d-%Y') >= '" + searchData.getFromDate() + "'");
+      searchQuery.append(" and datetime >= '" + searchData.getFromDate() + "'");
     }
     if ((searchData.getFromDate() == null) && (searchData.getToDate() != null)) {
-      searchQuery.append(" and date_format(datetime, '%m-%d-%Y') <= '" + searchData.getToDate() + "'");
+      searchQuery.append(" and datetime <= '" + searchData.getToDate() + "'");
     }
     return searchQuery.toString();
   }
