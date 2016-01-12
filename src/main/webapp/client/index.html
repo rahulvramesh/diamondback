@@ -103,6 +103,10 @@ body.loading .modal {
     overflow: auto;
 }
         
+        table.dataTable span.highlight {
+  background-color: #FFFF88;
+}
+        
 	</style>
         
 
@@ -120,6 +124,8 @@ body.loading .modal {
 
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.2.21.min.js"></script>
     <script src="http://malsup.github.com/jquery.form.js"></script>
+    	<script type="text/javascript" language="javascript" src="https://bartaz.github.io/sandbox.js/jquery.highlight.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/plug-ins/1.10.10/features/searchHighlight/dataTables.searchHighlight.min.js"></script>
     
     
 	<script type="text/javascript" class="init">
@@ -265,6 +271,7 @@ function processTable(fdata){
  
  table = $('#example').DataTable( {
   			aaData: fdata.data,
+            searchHighlight: true,
             "columnDefs": [ {
             "targets": -1,
             "data": null,
@@ -273,6 +280,8 @@ function processTable(fdata){
       
             
 		} );
+    
+   
     
     $('#example tbody').on('click', 'tr', function () {
         
@@ -334,6 +343,7 @@ function porcessScriptTable(data){
         }
          table4script = $('#scriptTable').DataTable( {
   			aaData: data,
+             searchHighlight: true,
             "columnDefs": [ {
             "targets": -1,
             "data": null,
@@ -446,6 +456,7 @@ var scheduleData = "{\"scriptName\":\""+scriptName + "\",\"fileName\":\"" + file
         }
          scheduleTable = $('#scheduleTable').DataTable( {
   			aaData: sdata,
+             searchHighlight: true,
               "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
                   
                     /* Append the grade to the default row class name */
