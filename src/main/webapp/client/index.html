@@ -71,7 +71,37 @@ body.loading {
 body.loading .modal {
     display: block;
 }
-        
+     
+#fade {
+    display: none;
+    position:absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: #ababab;
+    z-index: 1001;
+    -moz-opacity: 0.8;
+    opacity: .70;
+    filter: alpha(opacity=80);
+}
+
+#modal {
+    display: none;
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    width: 100px;
+    height: 100px;
+    padding:30px 15px 0px;
+    border: 3px solid #ababab;
+    box-shadow:1px 1px 10px #ababab;
+    border-radius:20px;
+    background-color: white;
+    z-index: 1002;
+    text-align:center;
+    overflow: auto;
+}
         
 	</style>
         
@@ -106,14 +136,30 @@ $( document ).ready(function() {
     });
     
     
-    $( "#fromdate" ).datepicker();
-    $( "#todate" ).datepicker();
+    $( "#fromdate" ).datepicker({changeMonth: true, changeYear: true, defaultDate: new Date()}).attr('readonly', 'true').
+keypress(function(event){
+  if(event.keyCode == 8){
+    event.preventDefault();
+  }
+});
+    $( "#todate" ).datepicker({changeMonth: true, changeYear: true, defaultDate: new Date()}).attr('readonly', 'true').
+keypress(function(event){
+  if(event.keyCode == 8){
+    event.preventDefault();
+  }
+});
     document.getElementById("uploader").innerHTML='<object type="text/html" height="100%" width="100%" data="http://ec2contai-ecselast-1odt0hji1ptrd-903851155.us-west-1.elb.amazonaws.com/etl" ></object>';
     
 });
         
         
-        
+    $(document)
+  .ajaxStart(function () {
+   openModal();
+  })
+  .ajaxStop(function () {
+    closeModal();
+  });    
 
 
 $(function() {
@@ -472,14 +518,25 @@ $('form').ajaxForm({
 }); 
   }         
   
-       
+    function openModal() {
+        document.getElementById('modal').style.display = 'block';
+        document.getElementById('fade').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+    document.getElementById('fade').style.display = 'none';
+}   
         
 	</script>
 
 </head>
 <body>
 
-
+ <div id="fade"></div>
+        <div id="modal">
+            <img id="loader" src="loading.gif"/>
+        </div>
 
 <div id="myTabs" class="container">
   <ul>
