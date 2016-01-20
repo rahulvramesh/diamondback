@@ -3,4 +3,4 @@ deployment:
     branch: master
     codedeploy:
       diamondback:
-        deployment_group: staging-instance-group
+        deployment_group: circleci-demo-dg
